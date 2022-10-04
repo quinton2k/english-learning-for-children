@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:learning_english/login.dart';
 
 void main() {
   return runApp(
-    MaterialApp(
+    const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text("My thesis App"),
-        ),
+        body: Login(),
       ),
     ),
   );
