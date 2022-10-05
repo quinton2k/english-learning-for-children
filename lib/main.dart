@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:learning_english/screens/login.dart';
+import 'package:learning_english/screens/signup_success.dart';
 import 'package:learning_english/screens/signup.dart';
 
 void main() {

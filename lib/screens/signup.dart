@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_english/screens/signup_success.dart';
 
 class SignUp extends StatefulWidget {
   const SignUp({Key? key}) : super(key: key);
@@ -97,7 +98,8 @@ class _SignUpState extends State<SignUp> {
               padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               child: ElevatedButton(
                 onPressed: () {
-                  print("Pressed Sign Up button");
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SignUpSuccess()));
                 },
                 style: ElevatedButton.styleFrom(
                   primary: const Color(0xff2D4990),
