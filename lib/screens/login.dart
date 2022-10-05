@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:learning_english/screens/signup.dart';
 
-// TODO:  Sign up page, Redirect to Sign up page
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -34,7 +34,7 @@ class _LoginState extends State<Login> {
             child: TextField(
               controller: usernameController,
               decoration: const InputDecoration(
-                border:  OutlineInputBorder(),
+                border: OutlineInputBorder(),
                 labelText: 'User Name',
               ),
             ),
@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
               obscureText: true,
               controller: passwordController,
               decoration: const InputDecoration(
-                border:  OutlineInputBorder(),
+                border: OutlineInputBorder(),
                 labelText: 'Password',
               ),
             ),
@@ -80,6 +80,8 @@ class _LoginState extends State<Login> {
               TextButton(
                 onPressed: () {
                   print('Di toi trang signup');
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const SignUp()));
                 },
                 child: const Text(
                   'Sign up',

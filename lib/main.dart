@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:learning_english/login.dart';
-import 'package:learning_english/signup.dart';
+import 'package:learning_english/screens/login.dart';
+import 'package:learning_english/screens/signup.dart';
 
 void main() {
   return runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: SignUp(),
+        body: Login(),
       ),
     ),
   );
