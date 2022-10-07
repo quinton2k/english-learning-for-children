@@ -98,11 +98,13 @@ class _SignUpState extends State<SignUp> {
               padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const SignUpSuccess()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpSuccess()));
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: const Color(0xff2D4990),
+                  primary: const Color(0xff4C7352),
                 ),
                 child: const Text('Sign Up'),
               ),
@@ -118,7 +120,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   child: const Text(
                     'Log in',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 18, color: Color(0xff4C7352)),
                   ),
                 ),
               ],

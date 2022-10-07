@@ -7,7 +7,7 @@ class SignUpSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: EdgeInsets.all(25.0),
+      padding: const EdgeInsets.all(25.0),
       child: Column(
         children: [
           Container(
@@ -37,7 +37,7 @@ class SignUpSuccess extends StatelessWidget {
               style: TextStyle(
                 fontSize: 25,
                 decoration: TextDecoration.underline,
-                color: Color(0xff2D4990),
+                color: Color(0xff4C7352),
               ),
             ),
           ),

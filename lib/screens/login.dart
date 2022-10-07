@@ -68,7 +68,7 @@ class _LoginState extends State<Login> {
                 print(passwordController.text);
               },
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xff2D4990),
+                primary: const Color(0xff4C7352),
               ),
               child: const Text('Login'),
             ),
@@ -85,7 +85,7 @@ class _LoginState extends State<Login> {
                 },
                 child: const Text(
                   'Sign up',
-                  style: TextStyle(fontSize: 18),
+                  style: TextStyle(fontSize: 18, color: Color(0xff4C7352)),
                 ),
               ),
             ],
