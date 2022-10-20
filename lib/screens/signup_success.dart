@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:learning_english/screens/vocabulary_detail.dart';
 
 class SignUpSuccess extends StatelessWidget {
   const SignUpSuccess({Key? key}) : super(key: key);
@@ -7,7 +8,7 @@ class SignUpSuccess extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Padding(
-      padding: const EdgeInsets.all(25.0),
+      padding: const EdgeInsets.all(55.0),
       child: Column(
         children: [
           Container(
@@ -21,17 +22,21 @@ class SignUpSuccess extends StatelessWidget {
             alignment: Alignment.center,
             padding: const EdgeInsets.all(20.0),
             child: const Text(
-              'Your Sign up was successful',
+              'Sign up successfully',
               style: TextStyle(fontSize: 25.0, fontWeight: FontWeight.w500),
             ),
           ),
           TextButton(
-            onPressed: () {
-              print('Go to homepage');
-            },
             style: TextButton.styleFrom(
               primary: Colors.black54,
             ),
+            onPressed: () {
+              print('Go to homepage');
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>  VocabularyDetail()));
+            },
             child: const Text(
               'Continue to Home',
               style: TextStyle(
