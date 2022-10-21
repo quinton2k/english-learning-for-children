@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:assets_audio_player/assets_audio_player.dart';
 
 class VocabularyDetail extends StatefulWidget {
   const VocabularyDetail({Key? key}) : super(key: key);
@@ -9,100 +9,89 @@ class VocabularyDetail extends StatefulWidget {
 }
 
 class _VocabularyDetailState extends State<VocabularyDetail> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  String url =
-      'https://drive.google.com/drive/folders/1060QRut9in9CqMIlJGNbWm32v_xoCwb2';
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    audioPlayer.release();
-    audioPlayer.dispose();
-  }
-
-  playMusic() async {
-    await audioPlayer.play(UrlSource(url));
-  }
-
+  String bePronunciation = '/ˈæm.bjə.ləns/';
+  String aePronunciation = '/ˈæm.bjə.ləns/';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ambulance".toLowerCase()),
-        backgroundColor: Color(0xff4C7352),
+        title: Text("Basketball".toLowerCase()),
+        backgroundColor: const Color(0xff4C7352),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {},
+          ),
+        ],
       ),
       body: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
           child: ListView(children: [
-            Image.network(
-              "https://www.anglomaniacy.pl/img/xv-van.png.pagespeed.ic.KgC879sDel.webp",
-              width: 50.0,
+            SizedBox(
+              height: 250,
+              child: Image.network(
+                "https://www.excellentesl4u.com/images/arm.jpg",
+                // height: 300,
+              ),
             ),
+            const Divider(color: Colors.black12),
             const Center(
               child: Text(
-                'Xe cứu thương',
+                'Bóng rổ',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                playMusic();
-              },
-              child: const Text(
-                'UK',
-                style: TextStyle(fontSize: 18, color: Color(0xff4C7352)),
-              ),
+            Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: const Color(0xff4C7352),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.phonelink_ring,
+                      ),
+                      label: const Text('UK'),
+                    ),
+                    Text(' $aePronunciation'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        primary: Color(0xff4C7352),
+                      ),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.phonelink_ring,
+                      ),
+                      label: const Text('US'),
+                    ),
+                    Text(' $bePronunciation'),
+                  ],
+                ),
+              ],
+            ),
+            Row(
+              children: const [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 40.0),
+                  child: Text('Từ đề xuất:'),
+                ),
+                TextButton(onPressed: null, child: Text('Football')),
+                TextButton(onPressed: null, child: Text('Ban bi')),
+                TextButton(onPressed: null, child: Text('Nhay du')),
+              ],
             ),
           ])),
     );
   }
 }
-
-// class VocabularyDetail extends StatelessWidget {
-//   VocabularyDetail({Key? key}) : super(key: key);
-
-//   final audioPlayer = AudioPlayer();
-//   @override
-//   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     title: Text("Ambulance".toLowerCase()),
-    //     backgroundColor: Color(0xff4C7352),
-    //   ),
-    //   body: Padding(
-    //       padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
-    //       child: ListView(children: [
-    //         Image.network(
-    //           "https://www.anglomaniacy.pl/img/xv-van.png.pagespeed.ic.KgC879sDel.webp",
-    //           width: 50.0,
-    //         ),
-    //         const Center(
-    //           child: Text(
-    //             'Xe cứu thương',
-    //             style: TextStyle(
-    //               fontWeight: FontWeight.bold,
-    //               fontSize: 25,
-    //             ),
-    //           ),
-    //         ),
-    //         TextButton(
-    //           onPressed: () {
-    //             audioPlayer.play(AssetSource('audio/Vehicle_Ambulance.mp3'));
-    //             print('Di toi trang signup');
-    //           },
-    //           child: const Text(
-    //             'UK',
-    //             style: TextStyle(fontSize: 18, color: Color(0xff4C7352)),
-    //           ),
-    //         ),
-    //       ])),
-    // );
-//   }
-// }
