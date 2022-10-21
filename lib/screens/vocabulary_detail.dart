@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:assets_audio_player/assets_audio_player.dart';
+import 'package:learning_english/my_speaker_icon.dart';
 
 class VocabularyDetail extends StatefulWidget {
   const VocabularyDetail({Key? key}) : super(key: key);
@@ -9,8 +9,8 @@ class VocabularyDetail extends StatefulWidget {
 }
 
 class _VocabularyDetailState extends State<VocabularyDetail> {
-  String bePronunciation = '/ˈæm.bjə.ləns/';
-  String aePronunciation = '/ˈæm.bjə.ləns/';
+  String bePronunciation = '/ɪkˈstræk.tə ˌhʊd/';
+  String aePronunciation = '/ɪkˈstræk.tɚ ˌhʊd/';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,11 +36,14 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
             ),
             const Divider(color: Colors.black12),
             const Center(
-              child: Text(
-                'Bóng rổ',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 25,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(0, 10, 0, 15),
+                child: Text(
+                  'Bóng rổ',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                  ),
                 ),
               ),
             ),
@@ -49,33 +52,44 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        primary: const Color(0xff4C7352),
+                    SizedBox(
+                      height: 30,
+                      width: 100,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          primary: const Color(0xff4C7352),
+                        ),
+                        onPressed: () {},
+                        icon: const Icon(
+                          MySpeakerIcon.volume,
+                        ),
+                        label: const Text('UK'),
                       ),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.phonelink_ring,
-                      ),
-                      label: const Text('UK'),
                     ),
-                    Text(' $aePronunciation'),
+                    Text('  $aePronunciation'),
                   ],
+                ),
+                const SizedBox(
+                  height: 8,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(
-                        primary: Color(0xff4C7352),
+                    SizedBox(
+                      height: 30,
+                      width: 100,
+                      child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xff4C7352),
+                        ),
+                        onPressed: () {},
+                        icon: const Icon(
+                          MySpeakerIcon.volume,
+                        ),
+                        label: const Text('US'),
                       ),
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.phonelink_ring,
-                      ),
-                      label: const Text('US'),
                     ),
-                    Text(' $bePronunciation'),
+                    Text('  $bePronunciation'),
                   ],
                 ),
               ],
