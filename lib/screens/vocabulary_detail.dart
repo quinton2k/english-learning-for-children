@@ -1,3 +1,4 @@
+import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_english/my_speaker_icon.dart';
 
@@ -9,8 +10,70 @@ class VocabularyDetail extends StatefulWidget {
 }
 
 class _VocabularyDetailState extends State<VocabularyDetail> {
-  String bePronunciation = '/ɪkˈstræk.tə ˌhʊd/';
-  String aePronunciation = '/ɪkˈstræk.tɚ ˌhʊd/';
+  final audioPlayer = AudioPlayer();
+  String bePronunciation = '/ˈbɑː.skɪt.bɔːl/';
+  String aePronunciation = '/ˈbæs.kət.bɑːl/';
+  // String aePronunciation = '/ˈbɑː.skɪt.bɔːl/';
+
+  Widget renderIcon(String type, String url) {
+    return Column(
+      // crossAxisAlignment: CrossAxisAlignment.end,
+      // mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        SizedBox(
+          height: 40,
+          width: 100,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                primary: const Color(0xff4C7352),
+              ),
+              onPressed: () async {
+                await audioPlayer.setUrl(url);
+                audioPlayer.play();
+              },
+              icon: const Icon(
+                MySpeakerIcon.volume,
+              ),
+              label: Text(type),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget renderPronunciation(String pronunciation) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 40,
+          width: 100,
+          // child: Padding(
+          //   padding: const EdgeInsets.all(8.0),
+          //   child: ElevatedButton.icon(
+          //     style: ElevatedButton.styleFrom(
+          //       primary: const Color(0xff4C7352),
+          //     ),
+          //     onPressed: () async {
+          //       await audioPlayer.setUrl(url);
+          //       audioPlayer.play();
+          //     },
+          //     icon: const Icon(
+          //       MySpeakerIcon.volume,
+          //     ),
+          //     label: Text(type),
+          //   ),
+          // ),
+        ),
+        Text('   $pronunciation'),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +93,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
             SizedBox(
               height: 250,
               child: Image.network(
-                "https://www.excellentesl4u.com/images/arm.jpg",
+                "https://www.anglomaniacy.pl/img/xv-basketball.png.pagespeed.ic.RGoAf1ChnQ.webp",
                 // height: 300,
               ),
             ),
@@ -47,53 +110,29 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                 ),
               ),
             ),
-            Column(
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    SizedBox(
-                      height: 30,
-                      width: 100,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff4C7352),
-                        ),
-                        onPressed: () {},
-                        icon: const Icon(
-                          MySpeakerIcon.volume,
-                        ),
-                        label: const Text('UK'),
-                      ),
-                    ),
-                    Text('  $aePronunciation'),
+                    renderIcon('UK',
+                        'https://dictionary.cambridge.org/vi/media/english/uk_pron/u/ukb/ukbas/ukbashf013.mp3'),
+                    renderIcon('US',
+                        'https://dictionary.cambridge.org/vi/media/english/us_pron/b/bas/baske/basketball.mp3'),
                   ],
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Column(
                   children: [
-                    SizedBox(
-                      height: 30,
-                      width: 100,
-                      child: ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xff4C7352),
-                        ),
-                        onPressed: () {},
-                        icon: const Icon(
-                          MySpeakerIcon.volume,
-                        ),
-                        label: const Text('US'),
-                      ),
-                    ),
-                    Text('  $bePronunciation'),
+                    renderPronunciation(bePronunciation),
+                    renderPronunciation(aePronunciation),
                   ],
                 ),
               ],
             ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
+
             Row(
               children: const [
                 Padding(
