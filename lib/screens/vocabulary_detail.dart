@@ -10,67 +10,39 @@ class VocabularyDetail extends StatefulWidget {
 }
 
 class _VocabularyDetailState extends State<VocabularyDetail> {
+  bool notTouched = true;
   final audioPlayer = AudioPlayer();
   String bePronunciation = '/ˈbɑː.skɪt.bɔːl/';
   String aePronunciation = '/ˈbæs.kət.bɑːl/';
   // String aePronunciation = '/ˈbɑː.skɪt.bɔːl/';
 
   Widget renderIcon(String type, String url) {
-    return Column(
-      // crossAxisAlignment: CrossAxisAlignment.end,
-      // mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        SizedBox(
-          height: 40,
-          width: 100,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                primary: const Color(0xff4C7352),
-              ),
-              onPressed: () async {
-                await audioPlayer.setUrl(url);
-                audioPlayer.play();
-              },
-              icon: const Icon(
-                MySpeakerIcon.volume,
-              ),
-              label: Text(type),
-            ),
-          ),
+    return Container(
+      child: ElevatedButton.icon(
+        style: ElevatedButton.styleFrom(
+          primary: const Color(0xff4C7352),
         ),
-      ],
+        onPressed: () async {
+          if (notTouched) {
+            await audioPlayer.setUrl(url);
+            audioPlayer.play();
+            notTouched = false;
+          }
+          Future.delayed(const Duration(milliseconds: 2000), () {
+            notTouched = true;
+          });
+        },
+        icon: const Icon(
+          MySpeakerIcon.volume,
+        ),
+        label: Text(type),
+      ),
     );
   }
 
   Widget renderPronunciation(String pronunciation) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: 40,
-          width: 100,
-          // child: Padding(
-          //   padding: const EdgeInsets.all(8.0),
-          //   child: ElevatedButton.icon(
-          //     style: ElevatedButton.styleFrom(
-          //       primary: const Color(0xff4C7352),
-          //     ),
-          //     onPressed: () async {
-          //       await audioPlayer.setUrl(url);
-          //       audioPlayer.play();
-          //     },
-          //     icon: const Icon(
-          //       MySpeakerIcon.volume,
-          //     ),
-          //     label: Text(type),
-          //   ),
-          // ),
-        ),
-        Text('   $pronunciation'),
-      ],
+    return Container(
+      child: Text('   $pronunciation'),
     );
   }
 
@@ -111,28 +83,38 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
               ),
             ),
             Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
-                  children: [
-                    renderIcon('UK',
-                        'https://dictionary.cambridge.org/vi/media/english/uk_pron/u/ukb/ukbas/ukbashf013.mp3'),
-                    renderIcon('US',
-                        'https://dictionary.cambridge.org/vi/media/english/us_pron/b/bas/baske/basketball.mp3'),
+                  children: <Widget>[
+                    SizedBox(
+                      child: renderPronunciation(aePronunciation),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      child: renderIcon('US',
+                          'https://dictionary.cambridge.org/vi/media/english/uk_pron/u/ukb/ukbas/ukbashf013.mp3'),
+                    ),
                   ],
                 ),
                 Column(
-                  children: [
-                    renderPronunciation(bePronunciation),
-                    renderPronunciation(aePronunciation),
+                  children: <Widget>[
+                    SizedBox(
+                      child: renderPronunciation(bePronunciation),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      child: renderIcon('UK',
+                          'https://dictionary.cambridge.org/vi/media/english/uk_pron/u/ukb/ukbas/ukbashf013.mp3'),
+                    ),
                   ],
                 ),
               ],
             ),
-            // const SizedBox(
-            //   height: 8,
-            // ),
-
             Row(
               children: const [
                 Padding(
@@ -140,8 +122,8 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                   child: Text('Từ đề xuất:'),
                 ),
                 TextButton(onPressed: null, child: Text('Football')),
-                TextButton(onPressed: null, child: Text('Ban bi')),
-                TextButton(onPressed: null, child: Text('Nhay du')),
+                TextButton(onPressed: null, child: Text('Tennis')),
+                TextButton(onPressed: null, child: Text('Hockey')),
               ],
             ),
           ])),
