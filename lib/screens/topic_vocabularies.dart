@@ -10,7 +10,10 @@ class TopicVocabularies extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff4C7352),
-        title: const Text("Lesson: COLOR"),
+        title: const Text(
+          "Lesson: COLOR",
+          style: TextStyle(fontFamily: 'SunnySpells', fontSize: 30),
+        ),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),

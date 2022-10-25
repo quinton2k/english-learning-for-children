@@ -78,7 +78,10 @@ flutter:
   fonts:
     - family:  MySpeakerIcon
       fonts:
-       - asset: fonts/MySpeakerIcon.ttf
+        - asset: fonts/MySpeakerIcon.ttf
+    - family: SunnySpells
+      fonts:
+        - asset: fonts/SunnySpellsFont.otf
   # fonts:
   #   - family: Schyler
   #     fonts:

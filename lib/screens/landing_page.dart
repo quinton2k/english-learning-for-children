@@ -21,7 +21,9 @@ class LandingPage extends StatelessWidget {
           onPressed: () {},
           child: Text(
             topicName,
-            style: const TextStyle(color: Colors.white, fontSize: 20),
+            style: const TextStyle(
+                color: Colors.white, fontSize: 28, fontFamily: 'SunnySpells'),
+                //TODO: Find a new font
           )),
     );
   }
