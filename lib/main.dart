@@ -1,4 +1,6 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
+import 'package:learning_english/games/word_find_puzzle.dart';
 import 'package:learning_english/screens/landing_page.dart';
 import 'package:learning_english/screens/login.dart';
 import 'package:learning_english/screens/signup_success.dart';
@@ -12,7 +14,7 @@ void main() {
     const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: TopicPage(),
+        body: WordFindPuzzle(),
       ),
     ),
   );
