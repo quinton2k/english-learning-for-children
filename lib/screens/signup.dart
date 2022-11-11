@@ -31,23 +31,13 @@ class _SignUpState extends State<SignUp> {
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(10.0),
-              child: TextField(
-                controller: firstNameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'First name',
-                ),
-              ),
-            ),
-            Container(
               padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
               child: TextField(
                 obscureText: true,
                 controller: lastNameController,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  labelText: 'Last name',
+                  labelText: 'Name',
                 ),
               ),
             ),
@@ -58,16 +48,6 @@ class _SignUpState extends State<SignUp> {
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
-                ),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 10.0),
-              child: TextField(
-                controller: usernameController,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'User Name',
                 ),
               ),
             ),
