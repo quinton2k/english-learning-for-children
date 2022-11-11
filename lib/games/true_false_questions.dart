@@ -57,11 +57,20 @@ class _QuizWidgetState extends State<QuizWidget> {
           desc: 'You scored a total of $totalCorrect out of $totalQuestions!',
           buttons: [
             DialogButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text(
-                  'Play Again',
-                  style: TextStyle(color: Colors.white, fontSize: 22),
-                ))
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'Play Again',
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
+            DialogButton(
+              color: Colors.black,
+              onPressed: () => print('Ve lai man hinh chinh'),
+              child: const Text(
+                'Home',
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ),
           ]).show();
       quizLogic.reset();
       scoreKeeper.clear();
@@ -187,19 +196,25 @@ class TrueFalseGameLogic {
   int questionIndex = 0;
   List<TrueFalseQuestion> questions = [
     TrueFalseQuestion(
-        'https://www.anglomaniacy.pl/img/xv-calculator.png.pagespeed.ic.mAZNKr-axi.webp',
-        'computer',
+        'https://img.freepik.com/premium-vector/little-kid-take-bath-bathtub_97632-7188.jpg',
+        'bath mat',
         false),
     TrueFalseQuestion(
-        'https://www.excellentesl4u.com/images/uniform.png', 'uniform ', true),
+        'https://img.freepik.com/premium-vector/cute-carrot-cartoon-carrot-clipart-vector-illustration_160901-2668.jpg',
+        'carrot',
+        true),
     TrueFalseQuestion(
-        'https://www.excellentesl4u.com/images/mirror.gif', 'mirror', true),
+        'https://img.freepik.com/free-vector/female-scientist-illustration_52683-31534.jpg',
+        'farmer',
+        false),
     TrueFalseQuestion(
         'https://htmlcolorcodes.com/assets/images/colors/neon-red-color-solid-background-1920x1080.png',
         'orange',
         false),
     TrueFalseQuestion(
-        'https://www.excellentesl4u.com/images/tongue.gif', 'mouth', false),
+        'https://img.freepik.com/premium-vector/scooter-cartoon-icon-illustration-motorcycle-vehicle-icon-concept-isolated-flat-cartoon-style_138676-1855.jpg',
+        'plane',
+        false),
   ];
 
   String? getQuestion() {

@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:word_search/word_search.dart';
 
-//TODO: fixing UI + playing audio 
+//TODO: fixing UI + playing audio
 class WordFindPuzzle extends StatefulWidget {
   const WordFindPuzzle({Key? key}) : super(key: key);
 
@@ -15,25 +15,30 @@ class _WordFindPuzzleState extends State<WordFindPuzzle> {
   GlobalKey<_WordFindWidgetState> globalKey = GlobalKey();
 
   late List<WordFindQuestion> listQuestions;
+
+  bool? gameOver;
+  int? questionsDone;
   @override
   void initState() {
     super.initState();
+    gameOver = false;
+    questionsDone = 0;
     listQuestions = [
       WordFindQuestion(
-        pathImage: "https://www.excellentesl4u.com/images/microwave.gif",
+        pathImage: "https://img.freepik.com/free-vector/frying-pan-cooking-utensils-graphic_53876-8475.jpg",
         question: "What is this ?",
-        answer: "microwa",
+        answer: "pan",
       ),
       WordFindQuestion(
         pathImage:
-            "https://assets.myntassets.com/dpr_1.5,q_60,w_400,c_limit,fl_progressive/assets/images/16498688/2022/4/13/0f2c0fab-ace1-4f5f-bc25-974cec65a2bd1649828394976DukieKookyKidsPinkSoftDoll1.jpg",
-        question: "How do you call this toy ?",
-        answer: "doll",
+            "https://img.freepik.com/premium-vector/set-old-red-telephone-logos_409025-98.jpg",
+        question: "How do you call this ?",
+        answer: "phone",
       ),
       WordFindQuestion(
-        pathImage: "https://www.excellentesl4u.com/images/hand.gif",
-        question: "What is this ?",
-        answer: "hand",
+        pathImage: "https://img.freepik.com/premium-vector/pink-towel-hanging-cartoon-textile-handcloth-icon_543062-2765.jpg",
+        question: "What is it ?",
+        answer: "towel",
       ),
     ];
   }
@@ -47,46 +52,68 @@ class _WordFindPuzzleState extends State<WordFindPuzzle> {
       // ),
       body: SafeArea(
         child: Container(
-          color: Colors.green,
           child: Container(
             child: Column(
               children: [
-                Expanded(
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return Container(
-                        color: Colors.blue,
-                        child: WordFindWidget(
-                          constraints.biggest,
-                          listQuestions
-                              .map((question) => question.clone())
-                              .toList(),
-                          key: globalKey,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Container(
-                  color: Colors.blue,
-                  width: 450,
-                  child: OutlinedButton.icon(
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.white,
+                if (!gameOver!)
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Container(
+                          color: Colors.blue,
+                          child: WordFindWidget(
+                            constraints.biggest,
+                            listQuestions
+                                .map((question) => question.clone())
+                                .toList(),
+                            key: globalKey,
+                          ),
+                        );
+                      },
                     ),
-                    onPressed: () {
-                      globalKey.currentState!.generatePuzzle(
-                          loop: listQuestions
-                              .map((question) => question.clone())
-                              .toList());
-                    },
-                    icon: const Icon(
-                      Icons.delete,
-                      size: 24.0,
-                    ),
-                    label: const Text('Delete'),
                   ),
-                ),
+                if (!gameOver!)
+                  Container(
+                    color: Colors.blue,
+                    width: 450,
+                    child: OutlinedButton.icon(
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                      ),
+                      onPressed: () {
+                        globalKey.currentState!.generatePuzzle(
+                            loop: listQuestions
+                                .map((question) => question.clone())
+                                .toList());
+                      },
+                      icon: const Icon(
+                        Icons.delete,
+                        size: 24.0,
+                      ),
+                      label: const Text('Delete'),
+                    ),
+                  ),
+                if (gameOver!)
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Game Over',
+                            style:
+                                Theme.of(context).textTheme.headline6!.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    )),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('Congratulation',
+                            style: Theme.of(context).textTheme.headline3),
+                      )
+                    ]),
+                  ),
               ],
             ),
           ),
@@ -105,7 +132,6 @@ class WordFindWidget extends StatefulWidget {
 }
 
 class _WordFindWidgetState extends State<WordFindWidget> {
-  final audioPlayer = AudioPlayer();
   late Size size;
   late List<WordFindQuestion> listQuestions;
   late int indexQuestion = 0;
@@ -208,7 +234,8 @@ class _WordFindWidgetState extends State<WordFindWidget> {
                       color = Colors.green[300];
                     } else if (puzzle.hintShow) {
                       color = Colors.yellow[100];
-                    } else if (currentQuestion.isFull && !currentQuestion.isDone) {
+                    } else if (currentQuestion.isFull &&
+                        !currentQuestion.isDone) {
                       color = Colors.red[100];
                     }
                     return InkWell(

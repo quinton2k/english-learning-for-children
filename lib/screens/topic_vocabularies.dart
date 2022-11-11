@@ -12,7 +12,7 @@ class TopicVocabularies extends StatelessWidget {
         backgroundColor: const Color(0xff4C7352),
         title: const Text(
           "Lesson: COLOR",
-          style: TextStyle(fontFamily: 'SunnySpells', fontSize: 30),
+          style: TextStyle(fontSize: 30),
         ),
         actions: <Widget>[
           IconButton(
