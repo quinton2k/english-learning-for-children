@@ -1,59 +1,79 @@
 import 'package:flutter/material.dart';
 import 'package:learning_english/noglow_behaviour.dart';
 import 'package:learning_english/screens/sidebar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class LandingPage extends StatelessWidget {
   const LandingPage({Key? key}) : super(key: key);
 
-  Widget topicSection(String topicName) {
-    return Container(
-      height: 50,
-      margin: const EdgeInsets.all(15.0),
-      padding: const EdgeInsets.all(3.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        color: const Color(0xff4C7352),
-        border: Border.all(
-          color: const Color(0xff4C7352),
+  GestureDetector topicButton(String title, IconData icon, double width) {
+    return GestureDetector(
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(16)),
         ),
+        height: 80,
+        // width: width,
+        child:
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 20.0),
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                decoration: TextDecoration.none,
+                fontFamily: 'Manrope',
+                color: Colors.black,
+                fontSize: 18.0,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: FaIcon(
+              icon,
+              color: Colors.black,
+            ),
+          ),
+        ]),
       ),
-      child: TextButton(
-          onPressed: () {},
-          child: Text(
-            topicName,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 28, fontFamily: 'SunnySpells'),
-                //TODO: Find a new font
-          )),
     );
   }
 
-  List<Widget> listViewUI() {
+  List<Widget> listViewUI(double width) {
     var result = <Widget>[];
-    List<String> topics = [
-      "Color",
-      "Family",
-      "School",
-      "Vehicle",
-      "Toy",
-      "Sport",
-      "Food",
-      "Home",
-      "Animal"
-    ];
-    for (int i = 0; i < topics.length; i++) {
-      result.add(topicSection(topics[i]));
-    }
+    var topics = {
+      'Animal': FontAwesomeIcons.paw,
+      'Color': FontAwesomeIcons.palette,
+      'Food': FontAwesomeIcons.bowlFood,
+      'Home': FontAwesomeIcons.house,
+      'People': FontAwesomeIcons.child,
+      'School': FontAwesomeIcons.schoolFlag,
+      'Sport': FontAwesomeIcons.medal,
+      'Toy': FontAwesomeIcons.robot,
+      'Vehicle': FontAwesomeIcons.motorcycle,
+      'Verb': FontAwesomeIcons.personRunning
+    };
+
+    result.add(const SizedBox(height: 10));
+    topics.forEach((key, value) {
+      result.add(topicButton(key, value, width));
+      result.add(const SizedBox(height: 10));
+    });
+
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width / 2;
     return Scaffold(
       drawer: const Sidebar(),
       appBar: AppBar(
-        title: const Text('mai cồ trần'),
-        backgroundColor: const Color(0xff4C7352),
+        title: const Text('Choose topic'),
+        backgroundColor: const Color(0xff272837),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.search),
@@ -63,7 +83,9 @@ class LandingPage extends StatelessWidget {
       ),
       body: ScrollConfiguration(
         behavior: NoGlowBehaviour(),
-        child: ListView(children: listViewUI()),
+        child: Container(
+            // color: Colors.red[300],
+            child: ListView(children: listViewUI(width))),
       ),
     );
   }
