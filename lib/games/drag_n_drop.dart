@@ -22,16 +22,18 @@ class _DragNDropWidgetState extends State<DragNDropWidget> {
       DnDModel(
           value: 'subway',
           name: 'Subway',
-          imagePath: 'https://img.freepik.com/free-vector/underground-transport-abstract-concept-illustration_335657-3932.jpg'),
+          imagePath:
+              'https://img.freepik.com/premium-vector/metro-icon-comic-style-train-subway-cartoon-vector-illustration-white-isolated-background-railroad-cargo-splash-effect-business-concept_157943-6157.jpg'),
       DnDModel(
           value: 'helicopter',
           name: 'Helicopter',
-          imagePath: 'https://img.freepik.com/free-vector/helicopter-cartoon-vector-icon-illustration-air-transportation-icon-concept-isolated-vector-flat-cartoon-style_138676-2511.jpg'),
+          imagePath:
+              'https://img.freepik.com/free-vector/helicopter-cartoon-vector-icon-illustration-air-transportation-icon-concept-isolated-vector-flat-cartoon-style_138676-2511.jpg'),
       DnDModel(
           value: 'taxi',
           name: 'Taxi',
           imagePath:
-              'https://img.freepik.com/premium-vector/happy-taxi-cartoon-isolated-white-background_43633-644.jpg'),
+              'https://img.freepik.com/premium-vector/taxi-cartoon-vector-icon-illustration_480044-725.jpg'),
       DnDModel(
           value: 'bicycle',
           name: 'Bicycle',
@@ -93,20 +95,20 @@ class _DragNDropWidgetState extends State<DragNDropWidget> {
                               backgroundColor: Colors.white,
                               backgroundImage:
                                   NetworkImage(item.imagePath ?? ''),
-                              radius: 50.0,
+                              radius: 40.0,
                             ),
                             feedback: CircleAvatar(
                               backgroundColor: Colors.white,
                               backgroundImage:
                                   NetworkImage(item.imagePath ?? ''),
-                              radius: 30.0,
+                              radius: 50.0,
                             ),
                             child: CircleAvatar(
                               backgroundColor: Colors.white,
                               backgroundImage:
                                   NetworkImage(item.imagePath ?? ''),
-                              minRadius: 30,
-                              maxRadius: 30,
+                              minRadius: 50,
+                              maxRadius: 50,
                             ),
                           ),
                         );
@@ -135,14 +137,14 @@ class _DragNDropWidgetState extends State<DragNDropWidget> {
                               style: Theme.of(context).textTheme.headline6,
                             ),
                           ),
-                          onAccept: (receivedItem)  {
+                          onAccept: (receivedItem) {
                             if (item.value == receivedItem.value) {
                               setState((() {
                                 item1!.remove(receivedItem);
                                 item2!.remove(item);
                               }));
                               score = score! + 10;
-                        
+
                               item.accepting = false;
                             } else {
                               setState(() {
