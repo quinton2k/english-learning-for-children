@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -11,6 +12,24 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  File? image;
+  Future pickImage() async {
+    try {
+      XFile? pickI =
+          (await ImagePicker().pickImage(source: ImageSource.gallery));
+      if (pickI == null) return;
+
+      final File tempImage = File(pickI.path);
+      setState(() {
+        image = tempImage;
+      });
+
+      print('Dia chi cua image: {$image!.path}');
+    } on PlatformException catch (e) {
+      print('Failed to pick image: $e');
+    }
+  }
+
   bool isObscurePassword = true;
   Widget customTextField(
       String labelText, String placeholder, bool isPassword) {
@@ -105,14 +124,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                              width: 4,
+                              width: 1,
                               color: Colors.white,
                             ),
                             color: Colors.blue,
                           ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                          child: IconButton(
+                            onPressed: () {
+                              pickImage();
+                            },
+                            icon: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
