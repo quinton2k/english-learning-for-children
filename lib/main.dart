@@ -10,7 +10,7 @@ void main() {
     const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: EditProfilePage(),
+        body: TopicListWidget(),
       ),
     ),
   );

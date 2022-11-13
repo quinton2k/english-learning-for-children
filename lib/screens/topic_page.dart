@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:learning_english/noglow_behaviour.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:learning_english/screens/topic_vocabularies.dart';
 
 class TopicPage extends StatelessWidget {
-  const TopicPage({Key? key}) : super(key: key);
+  final String title;
+  const TopicPage({Key? key, required this.title}) : super(key: key);
 
-  GestureDetector modeButton(
-      String title, String subtitle, IconData icon, Color color, double width) {
+  GestureDetector modeButton(String title, String subtitle, IconData icon,
+      Color color, double width, BuildContext context) {
     return GestureDetector(
+      onTap: (() {
+        if (title == 'Vocabulary') {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => ListVocabulary(title: this.title),
+          ));
+        }
+
+        if (title == 'Detection') {
+          //Todo: Handle detection page
+        }
+
+        if (title == 'True False') {
+
+        }
+        if (title == 'Word find') {
+
+        }
+        if (title == 'Drag and Drop game') {
+          
+        }
+      }),
       child: Container(
         decoration: BoxDecoration(
           color: color,
@@ -67,8 +90,8 @@ class TopicPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff4C7352),
-        title: const Text(
-          'Color',
+        title: Text(
+          title,
           style: TextStyle(fontSize: 30),
         ),
       ),
@@ -88,19 +111,21 @@ class TopicPage extends StatelessWidget {
                         'Learn Words',
                         FontAwesomeIcons.chalkboardUser,
                         Color(0xFF2F80ED),
-                        width),
-                    modeButton('Detection', 'Detection objects',
-                        FontAwesomeIcons.image, Color(0xffdf1D5A), width),
+                        width,
+                        context),
+                    if (title == 'Vehicle' || title == 'Animal')
+                      modeButton('Detection', 'Detection objects',
+                          FontAwesomeIcons.image, Color(0xffdf1D5A), width, context),
                     modeButton('True False', 'Decide whether it true or false',
-                        FontAwesomeIcons.question, Color(0xff45d280), width),
+                        FontAwesomeIcons.question, Color(0xff45d280), width, context),
                     modeButton(
                         'Drag and Drop game',
                         'Drag the image into the correct word',
                         FontAwesomeIcons.hand,
                         Color(0xffff8306),
-                        width),
+                        width, context),
                     modeButton('Word find', 'Complete words',
-                        FontAwesomeIcons.puzzlePiece, Color(0xffdf1D5A), width),
+                        FontAwesomeIcons.puzzlePiece, Color(0xffdf1D5A), width, context),
                   ],
                 ),
               ],

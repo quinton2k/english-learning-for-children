@@ -32,10 +32,10 @@ class SignUpSuccess extends StatelessWidget {
             ),
             onPressed: () {
               print('Go to homepage');
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>  VocabularyDetail()));
+              // Navigator.push(
+              //     context,
+              //     MaterialPageRoute(
+              //         builder: (context) =>  VocabularyDetail()));
             },
             child: const Text(
               'Continue to Home',
