@@ -1,11 +1,11 @@
 import 'dart:convert';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_english/model/detail_vocabulary.dart';
-import 'package:learning_english/my_speaker_icon.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_english/noglow_behaviour.dart';
-import 'package:learning_english/screens/topic_page.dart';
+import 'package:learning_english/screens/topic_vocabularies.dart';
 
 class VocabularyDetail extends StatefulWidget {
   final String word;
@@ -56,7 +56,8 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
           });
         },
         icon: const Icon(
-          MySpeakerIcon.volume,
+          FontAwesomeIcons.volumeHigh,
+          size: 10,
         ),
         label: Text(type),
       ),
@@ -186,8 +187,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
             ),
             onPressed: () {
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) =>
-                    TopicPage(title: widget.topic),
+                builder: (context) => ListVocabulary(title: widget.topic),
               ));
             },
           ),

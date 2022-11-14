@@ -42,6 +42,7 @@ dependencies:
   font_awesome_flutter: ^10.2.1
   image_picker: ^0.8.6
   http: ^0.13.5
+  image_cropper: ^3.0.1
 
 dev_dependencies:
   flutter_test:
@@ -80,13 +81,8 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
  
-  fonts:
-    - family:  MySpeakerIcon
-      fonts:
-        - asset: fonts/MySpeakerIcon.ttf
-    - family: SunnySpells
-      fonts:
-        - asset: fonts/SunnySpellsFont.otf
+
+   
   # fonts:
   #   - family: Schyler
   #     fonts:

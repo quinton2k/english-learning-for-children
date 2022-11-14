@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:learning_english/screens/edit_profile_page.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({Key? key}) : super(key: key);
@@ -20,7 +21,11 @@ class Sidebar extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.account_circle_rounded),
               title: const Text('Profile'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: ()  {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const EditProfilePage(),
+                )); 
+              },
             ),
             ListTile(
               leading: const Icon(Icons.border_color),

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:learning_english/screens/select_photo_options.dart';
 
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key}) : super(key: key);
@@ -13,21 +15,55 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
   File? image;
-  Future pickImage() async {
+  Future pickImage(ImageSource source) async {
     try {
-      XFile? pickI =
-          (await ImagePicker().pickImage(source: ImageSource.gallery));
+      XFile? pickI = (await ImagePicker().pickImage(source: source));
       if (pickI == null) return;
 
-      final File tempImage = File(pickI.path);
+      File tempImage = File(pickI.path);
+      tempImage = (await cropImage(imageFile: tempImage))!;
       setState(() {
         image = tempImage;
+        Navigator.of(context).pop();
       });
 
       print('Dia chi cua image: {$image!.path}');
     } on PlatformException catch (e) {
       print('Failed to pick image: $e');
+      Navigator.of(context).pop();
     }
+  }
+
+  Future<File?> cropImage({required File imageFile}) async {
+    CroppedFile? croppedImage =
+        await ImageCropper().cropImage(sourcePath: imageFile.path);
+    if (croppedImage == null) return null;
+    return File(croppedImage.path);
+  }
+
+  void _showSelectPhotoOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25.0),
+        ),
+      ),
+      builder: (context) => DraggableScrollableSheet(
+          initialChildSize: 0.28,
+          maxChildSize: 0.4,
+          minChildSize: 0.28,
+          expand: false,
+          builder: (context, scrollController) {
+            return SingleChildScrollView(
+              controller: scrollController,
+              child: SelectPhotoOptionsScreen(
+                onTap: pickImage,
+              ),
+            );
+          }),
+    );
   }
 
   bool isObscurePassword = true;
@@ -96,23 +132,30 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   child: Stack(
                     children: [
                       Container(
-                        width: 130,
-                        height: 130,
+                        width: 200,
+                        height: 200,
                         decoration: BoxDecoration(
                           border: Border.all(width: 4, color: Colors.white),
-                          boxShadow: [
-                            BoxShadow(
-                              spreadRadius: 2,
-                              blurRadius: 10,
-                              color: Colors.black.withOpacity(0.1),
-                            ),
-                          ],
+                          // boxShadow: [
+                          //   BoxShadow(
+                          //     spreadRadius: 2,
+                          //     blurRadius: 10,
+                          //     color: Colors.black.withOpacity(0.1),
+                          //   ),
+                          // ],
                           shape: BoxShape.circle,
-                          image: const DecorationImage(
-                            fit: BoxFit.cover,
-                            image: NetworkImage(
-                                'https://scontent.fvca1-1.fna.fbcdn.net/v/t39.30808-6/216500295_3113849848845908_8638933755969857184_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=730e14&_nc_ohc=60TcJ5iqoooAX_mXDCx&_nc_ht=scontent.fvca1-1.fna&oh=00_AfAX2SO3uSHaODq39vSoIt7Yssl6PSxEJtpdartDCYNICQ&oe=6372C8C7'),
-                          ),
+                        ),
+                        child: Center(
+                          child: image == null
+                              ? const CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkTFAOXiJK2bLvwNUIvLF24U-u8NtBnw48xd3ClsXALg&s'),
+                                  radius: 180,
+                                )
+                              : CircleAvatar(
+                                  backgroundImage: FileImage(image!),
+                                  radius: 180.0,
+                                ),
                         ),
                       ),
                       Positioned(
@@ -131,7 +174,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              pickImage();
+                              _showSelectPhotoOptions(context);
                             },
                             icon: const Icon(
                               Icons.edit,
@@ -161,7 +204,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
                       child: const Text(
                         'Cancel',
                         style: TextStyle(
