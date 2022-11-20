@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:learning_english/model/vocabulary.dart';
 import 'package:learning_english/noglow_behaviour.dart';
 import 'package:learning_english/screens/sidebar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_english/screens/topic_page.dart';
+import 'package:learning_english/screens/vocabulary_detail.dart';
 
 class TopicListWidget extends StatefulWidget {
   const TopicListWidget({Key? key}) : super(key: key);
@@ -41,12 +43,17 @@ class _TopicListWidgetState extends State<TopicListWidget> {
       appBar: AppBar(
         title: const Text('Choose topic'),
         backgroundColor: const Color(0xff272837),
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: const Icon(Icons.search),
-        //     onPressed: () {},
-        //   ),
-        // ],
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
+          ),
+        ],
       ),
       body: ScrollConfiguration(
         behavior: NoGlowBehaviour(),
@@ -92,7 +99,7 @@ class _TopicListWidgetState extends State<TopicListWidget> {
     return GestureDetector(
       onTap: (() {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => TopicPage(title: title),
+          builder: (context) => TopicPage(topic: title),
         ));
       }),
       child: Padding(
@@ -173,5 +180,129 @@ class TopicList {
       quantity: json['topicQuantity'],
       topics: json['allTopics'],
     );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate {
+  fetchAllVocab() async {
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:3000/api/v1/topic/vocabs'));
+
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+      List<Vocabulary> listVocab = [];
+      for (var voca in jsonData) {
+        Vocabulary temp = Vocabulary.fromJson(voca);
+        listVocab.add(temp);
+      }
+
+      return listVocab;
+    } else {
+      throw Exception('Failed to load all vocab for searching');
+    }
+  }
+
+  @override
+  List<Widget>? buildActions(BuildContext context) {
+    return [
+      IconButton(
+        onPressed: () {
+          query = '';
+        },
+        icon: const Icon(Icons.clear),
+      ),
+    ];
+  }
+
+  @override
+  Widget? buildLeading(BuildContext context) {
+    return IconButton(
+      onPressed: () {
+        close(context, null);
+      },
+      icon: const Icon(Icons.arrow_back),
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    // TODO: implement buildResults
+    // throw UnimplementedError();
+
+    return FutureBuilder(
+      future: fetchAllVocab(),
+      builder: (context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          List<Vocabulary> matchQuery = [];
+          for (var word in snapshot.data) {
+            if (word.word
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
+              matchQuery.add(word);
+            }
+          }
+          return ListView.builder(
+            itemCount: matchQuery.length,
+            itemBuilder: (context, index) {
+              var result = matchQuery[index];
+              return ListTile(
+                title: Text(result.word.replaceAll('_', ' ')),
+                onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VocabularyDetail(word: result.word, topic: result.topicName)));
+                }
+              );
+            },
+          );
+        }
+        if (snapshot.hasError) {
+          return Text('Co loi ');
+        }
+        return const Center(
+          child: Text('Loading zzz'),
+        );
+      },
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    // TODO: implement buildSuggestions
+    // throw UnimplementedError();
+    return FutureBuilder(
+        future: fetchAllVocab(),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) {
+            return const Text('Co loi ');
+          }
+          if (snapshot.hasData) {
+            List<Vocabulary> matchQuery = [];
+            for (var word in snapshot.data) {
+              if (word.word
+                  .toString()
+                  .toLowerCase()
+                  .contains(query.toLowerCase())) {
+                matchQuery.add(word);
+              }
+            }
+            return ListView.builder(
+              itemCount: matchQuery.length,
+              itemBuilder: (context, index) {
+                var result = matchQuery[index];
+                return ListTile(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => VocabularyDetail(word: result.word, topic: result.topicName)));
+                  },
+                  title: Text(result.word.replaceAll('_', ' ')),
+                );
+              },
+            );
+          }
+          return const Center(
+            child: Text('Loading zzz'),
+          );
+        });
   }
 }

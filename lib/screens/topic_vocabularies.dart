@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:learning_english/model/Vocabulary.dart';
 import 'package:learning_english/noglow_behaviour.dart';
+import 'package:learning_english/screens/topic_page.dart';
 import 'package:learning_english/screens/vocabulary_detail.dart';
 import 'package:http/http.dart' as http;
 
@@ -42,12 +43,13 @@ class _ListVocabularyState extends State<ListVocabulary> {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => VocabularyDetail(topic: widget.title, word: word)));
+            builder: (context) =>
+                VocabularyDetail(topic: widget.title, word: word)));
       },
       child: Card(
         color: Colors.grey[200],
         child: ListTile(
-          title: Text(word),
+          title: Text(word.replaceAll('_', ' ')),
           subtitle: Text(meaning),
         ),
       ),
@@ -58,6 +60,17 @@ class _ListVocabularyState extends State<ListVocabulary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => TopicPage(topic: widget.title),
+            ));
+          },
+        ),
         backgroundColor: const Color(0xff4C7352),
         title: Text(
           "Lesson: ${widget.title}",
@@ -79,8 +92,8 @@ class _ListVocabularyState extends State<ListVocabulary> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, i) {
-                  return vocabularyCard(
-                      snapshot.data[i].word, snapshot.data![i].meaning, context);
+                  return vocabularyCard(snapshot.data[i].word,
+                      snapshot.data![i].meaning, context);
                 },
               );
             } else if (snapshot.hasError) {

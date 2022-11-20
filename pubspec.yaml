@@ -43,6 +43,7 @@ dependencies:
   image_picker: ^0.8.6
   http: ^0.13.5
   image_cropper: ^3.0.1
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
@@ -81,7 +82,11 @@ flutter:
   # list giving the asset and other descriptors for the font. For
   # example:
  
-
+  fonts: 
+    - family: Gilroy
+      fonts:
+        - asset: fonts/Gilroy-ExtraBold.otf
+        - asset: fonts/Gilroy-Light.otf
    
   # fonts:
   #   - family: Schyler

@@ -171,14 +171,14 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: widget.word,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
+      // title: widget.word.replaceAll('_', ' '),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   visualDensity: VisualDensity.adaptivePlatformDensity,
+      // ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(widget.word),
+          title: Text(widget.word.replaceAll('_', ' ').toLowerCase()),
           backgroundColor: const Color(0xff4C7352),
           leading: IconButton(
             icon: const Icon(
@@ -186,9 +186,11 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
               color: Colors.white,
             ),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => ListVocabulary(title: widget.topic),
-              ));
+              Navigator.pop(context);
+
+              // Navigator.of(context).push(MaterialPageRoute(
+              //   builder: (context) => ListVocabulary(title: widget.topic),
+              // ));
             },
           ),
           // actions: <Widget>[

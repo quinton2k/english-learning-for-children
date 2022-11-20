@@ -5,12 +5,12 @@ import 'package:learning_english/screens/edit_profile_page.dart';
 import 'package:learning_english/screens/landing_page.dart';
 import 'package:learning_english/screens/topic_page.dart';
 
-
 void main() {
   return runApp(
-    const MaterialApp(
+    MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
+      // theme: ThemeData(fontFamily: 'Gilroy'),
+      home: const Scaffold(
         body: TopicListWidget(),
       ),
     ),
