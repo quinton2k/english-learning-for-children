@@ -1,16 +1,13 @@
 // @dart=2.9
 import 'package:flutter/material.dart';
-import 'package:learning_english/games/drag_n_drop.dart';
-import 'package:learning_english/screens/edit_profile_page.dart';
 import 'package:learning_english/screens/landing_page.dart';
-import 'package:learning_english/screens/topic_page.dart';
 
 void main() {
   return runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(fontFamily: 'Gilroy'),
-      home: const Scaffold(
+      home:  Scaffold(
         body: TopicListWidget(),
       ),
     ),
