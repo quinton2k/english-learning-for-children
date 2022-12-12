@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:learning_english/model/Vocabulary.dart';
 import 'package:learning_english/noglow_behaviour.dart';
+import 'package:learning_english/screens/common_widget.dart';
 import 'package:learning_english/screens/topic_page.dart';
 import 'package:learning_english/screens/vocabulary_detail.dart';
 import 'package:http/http.dart' as http;
@@ -34,12 +35,8 @@ class _ListVocabularyState extends State<ListVocabulary> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   listVocab = fetchVocabList();
-  // }
-  Widget vocabularyCard(String word, String meaning, BuildContext context) {
+  Widget vocabularyCard(
+      String word, String meaning, Color color, BuildContext context) {
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(MaterialPageRoute(
@@ -47,7 +44,7 @@ class _ListVocabularyState extends State<ListVocabulary> {
                 VocabularyDetail(topic: widget.title, word: word)));
       },
       child: Card(
-        color: Colors.grey[200],
+        color: color,
         child: ListTile(
           title: Text(word.replaceAll('_', ' ')),
           subtitle: Text(meaning),
@@ -60,28 +57,11 @@ class _ListVocabularyState extends State<ListVocabulary> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => TopicPage(topic: widget.title),
-            ));
-          },
-        ),
-        backgroundColor: const Color(0xff4C7352),
-        title: Text(
-          "Lesson: ${widget.title}",
-          style: const TextStyle(fontSize: 30),
-        ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () {},
-          ),
-        ],
+        automaticallyImplyLeading: false,
+        backgroundColor: const Color(0xff2b5b89),
+        title: Text("Lesson: ${widget.title}",
+            style: const TextStyle(
+                fontSize: 30, color: Color.fromARGB(255, 184, 218, 250))),
       ),
       body: ScrollConfiguration(
         behavior: NoGlowBehaviour(),
@@ -92,15 +72,19 @@ class _ListVocabularyState extends State<ListVocabulary> {
               return ListView.builder(
                 itemCount: snapshot.data.length,
                 itemBuilder: (context, i) {
+                  Color color = Colors.grey[100]!;
+                  if (i % 2 == 0) {
+                    color = Colors.white;
+                  }
                   return vocabularyCard(snapshot.data[i].word,
-                      snapshot.data![i].meaning, context);
+                      snapshot.data![i].meaning, color, context);
                 },
               );
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             }
 
-            return Center(child: Text('Loading'));
+            return const LoadingPage();
           },
         ),
       ),

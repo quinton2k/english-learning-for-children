@@ -6,23 +6,23 @@ class NoResultFoundScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      // appBar: AppBar(
+      //     // leading: IconButton(
+      //     //   icon: const Icon(
+      //     //     Icons.arrow_back,
+      //     //     color: Colors.white,
+      //     //   ),
+      //     //   onPressed: () {
+      //     //     Navigator.pop(context);
+      //     //   },
+      //     // ),
+      //     ),
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.network(
-            "https://raw.githubusercontent.com/abuanwar072/20-Error-States-Flutter/master/assets/images/14_No%20Search%20Results.png",
-            fit: BoxFit.cover,
+          FittedBox(
+            child: Image.asset('assets/icons/404.png'),
+            fit: BoxFit.fill,
           ),
           Positioned(
             bottom: MediaQuery.of(context).size.height * 0.15,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:learning_english/model/detail_vocabulary.dart';
 import 'package:http/http.dart' as http;
 import 'package:learning_english/noglow_behaviour.dart';
+import 'package:learning_english/screens/common_widget.dart';
 import 'package:learning_english/screens/topic_vocabularies.dart';
 
 class VocabularyDetail extends StatefulWidget {
@@ -43,7 +44,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
     return Container(
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
-          primary: const Color(0xff4C7352),
+          primary: const Color(0xff2b5b89),
         ),
         onPressed: () async {
           if (notTouched) {
@@ -72,7 +73,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
 
   Widget appBody(
       String vocab,
-      String meaing,
+      String meaning,
       String bePronun,
       String aePronun,
       String beAudio,
@@ -80,8 +81,9 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
       String image,
       List<String> suggested,
       BuildContext context) {
+    suggested.shuffle();
     return Padding(
-        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(10.0, 50.0, 10.0, 0.0),
         child: SizedBox(
           height: 500,
           child: ListView(
@@ -100,10 +102,22 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 15),
                     child: Text(
-                      meaing,
+                      vocab.replaceAll('_', ' '),
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 25,
+                        fontSize: 30,
+                      ),
+                    ),
+                  ),
+                ),
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                    child: Text(
+                      meaning,
+                      style: const TextStyle(
+                        // fontWeight: FontWeight.bold,
+                        fontSize: 17,
                       ),
                     ),
                   ),
@@ -152,7 +166,8 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                                 word: suggested[0], topic: widget.topic),
                           ));
                         },
-                        child: Text(suggested[0])),
+                        child: Text(
+                            suggested[0].replaceAll('_', ' ').toLowerCase())),
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
@@ -160,7 +175,8 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                               word: suggested[1], topic: widget.topic),
                         ));
                       },
-                      child: Text(suggested[1]),
+                      child:
+                          Text(suggested[1].replaceAll('_', ' ').toLowerCase()),
                     ),
                   ],
                 ),
@@ -178,27 +194,11 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
       // ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text(widget.word.replaceAll('_', ' ').toLowerCase()),
-          backgroundColor: const Color(0xff4C7352),
-          leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-
-              // Navigator.of(context).push(MaterialPageRoute(
-              //   builder: (context) => ListVocabulary(title: widget.topic),
-              // ));
-            },
+          title: Text(
+            widget.word.replaceAll('_', ' ').toLowerCase(),
+            style: TextStyle(color: Color.fromARGB(255, 184, 218, 250)),
           ),
-          // actions: <Widget>[
-          //   IconButton(
-          //     icon: const Icon(Icons.search),
-          //     onPressed: () {},
-          //   ),
-          // ],
+          backgroundColor: const Color(0xff2b5b89),
         ),
         body: ScrollConfiguration(
             behavior: NoGlowBehaviour(),
@@ -225,7 +225,7 @@ class _VocabularyDetailState extends State<VocabularyDetail> {
                 if (snapshot.hasError) {
                   return Text('${snapshot.error}');
                 }
-                return const Center(child: Text('Loading'));
+                return const LoadingPage();
               },
             )),
       ),

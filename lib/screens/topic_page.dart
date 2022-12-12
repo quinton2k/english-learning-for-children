@@ -1,46 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:learning_english/games/drag_n_drop.dart';
 import 'package:learning_english/games/true_false_questions.dart';
+import 'package:learning_english/games/word_find_puzzle.dart';
 import 'package:learning_english/noglow_behaviour.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:learning_english/screens/landing_page.dart';
+import 'package:learning_english/screens/common_widget.dart';
 import 'package:learning_english/screens/no_result_found.dart';
 import 'package:learning_english/screens/select_photo_options.dart';
 import 'package:learning_english/screens/topic_vocabularies.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:learning_english/screens/vocabulary_detail.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-
-class LoadingPage extends StatelessWidget {
-  const LoadingPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xff272837),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SpinKitFoldingCube(
-              size: 50,
-              color: Colors.white,
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              'Detecting',
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
 
 class TopicPage extends StatefulWidget {
   final String topic;
@@ -51,6 +23,10 @@ class TopicPage extends StatefulWidget {
 }
 
 class _TopicPageState extends State<TopicPage> {
+  Future<bool> _onWillPop() async {
+    return false; //<-- SEE HERE
+  }
+
   bool isLoading = false;
   // pick Image function
   File? image;
@@ -135,7 +111,7 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   GestureDetector modeButton(String title, String subtitle, IconData icon,
-      Color color, double width, BuildContext context) {
+      Color buttonColor, Color color, double width, BuildContext context) {
     return GestureDetector(
       onTap: (() {
         if (title == 'Vocabulary') {
@@ -155,12 +131,19 @@ class _TopicPageState extends State<TopicPage> {
             builder: (context) => TrueFalseGame(topic: widget.topic),
           ));
         }
-        if (title == 'Word find') {}
-        if (title == 'Drag and Drop game') {}
+        if (title == 'Word find') {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => WordFindPuzzle(topic: widget.topic)));
+        }
+        if (title == 'Matching') {
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => MatchingGame(topic: widget.topic),
+          ));
+        }
       }),
       child: Container(
         decoration: BoxDecoration(
-          color: color,
+          color: buttonColor,
           borderRadius: const BorderRadius.all(Radius.circular(16)),
         ),
         width: width,
@@ -174,27 +157,27 @@ class _TopicPageState extends State<TopicPage> {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.none,
                       fontFamily: 'Manrope',
-                      color: Colors.white,
+                      color: color,
                       fontSize: 18.0,
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5.0),
-                    child: Text(
-                      subtitle,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        decoration: TextDecoration.none,
-                        fontFamily: 'Manrope',
-                        color: Colors.white,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.only(top: 5.0),
+                  //   child: Text(
+                  //     subtitle,
+                  //     style: const TextStyle(
+                  //       fontWeight: FontWeight.bold,
+                  //       decoration: TextDecoration.none,
+                  //       fontFamily: 'Manrope',
+                  //       color: Colors.grey,
+                  //       fontSize: 12,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -202,7 +185,7 @@ class _TopicPageState extends State<TopicPage> {
               padding: const EdgeInsets.all(20.0),
               child: FaIcon(
                 icon,
-                color: Colors.white,
+                color: color,
               ),
             ),
           ],
@@ -215,30 +198,32 @@ class _TopicPageState extends State<TopicPage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width - 80;
     return isLoading
-        ? const LoadingPage()
+        ? const LoadingDetection()
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: const Color(0xff4C7352),
+              backgroundColor: const Color(0xff2b5b89),
               title: Text(
                 widget.topic,
-                style: const TextStyle(fontSize: 30),
+                style: const TextStyle(
+                    fontSize: 30, color: Color.fromARGB(255, 184, 218, 250)),
               ),
-              leading: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const TopicListWidget(),
-                  ));
-                },
-              ),
+              automaticallyImplyLeading: false,
+              // leading: IconButton(
+              //   icon: const Icon(
+              //     Icons.arrow_back,
+              //     color: Color.fromARGB(255, 184, 218, 250),
+              //   ),
+              //   onPressed: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const TopicListWidget(),
+              //     ));
+              //   },
+              // ),
             ),
             body: ScrollConfiguration(
               behavior: NoGlowBehaviour(),
               child: Container(
-                color: const Color(0xff272837),
+                color: Colors.white,
                 child: Center(
                   child: Column(
                     children: [
@@ -250,7 +235,8 @@ class _TopicPageState extends State<TopicPage> {
                               'Vocabulary',
                               'Learn Words',
                               FontAwesomeIcons.chalkboardUser,
-                              const Color(0xFF2F80ED),
+                              Color.fromARGB(255, 233, 244, 229),
+                              Color(0xff417c66),
                               width,
                               context),
                           if (widget.topic == 'Animal')
@@ -258,28 +244,32 @@ class _TopicPageState extends State<TopicPage> {
                                 'Detection',
                                 'Detection objects',
                                 FontAwesomeIcons.image,
-                                const Color(0xffdf1D5A),
+                                Color.fromARGB(255, 245, 225, 216),
+                                Color(0xffac4c2c),
                                 width,
                                 context),
                           modeButton(
                               'True False',
                               'Decide whether it true or false',
                               FontAwesomeIcons.question,
-                              const Color(0xff45d280),
+                              Color.fromARGB(255, 245, 232, 240),
+                              Color(0xffb46c6d),
                               width,
                               context),
                           modeButton(
-                              'Drag and Drop game',
+                              'Matching',
                               'Drag the image into the correct word',
                               FontAwesomeIcons.hand,
-                              const Color(0xffff8306),
+                              Color.fromARGB(255, 222, 236, 249),
+                              const Color(0xff2b5b89),
                               width,
                               context),
                           modeButton(
                               'Word find',
                               'Complete words',
                               FontAwesomeIcons.puzzlePiece,
-                              const Color(0xffdf1D5A),
+                              Color.fromARGB(255, 247, 238, 219),
+                              Color(0xffb2955d),
                               width,
                               context),
                         ],

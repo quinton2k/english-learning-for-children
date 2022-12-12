@@ -7,7 +7,7 @@ void main() {
     const MaterialApp(
       debugShowCheckedModeBanner: false,
       // theme: ThemeData(fontFamily: 'Gilroy'),
-      home:  Scaffold(
+      home: Scaffold(
         body: TopicListWidget(),
       ),
     ),
